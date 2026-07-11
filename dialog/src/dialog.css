@@ -1,0 +1,152 @@
+/* ============================================================
+   UPPORA «ДИАЛОГ» — сайт-мессенджер. Жанр вместо лендинга.
+   ============================================================ */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
+
+:root{
+  --bgchat:#0F1210;
+  --bubble:#1C221D;
+  --bubble2:#232B24;
+  --me:#00C147;
+  --mint:#7FE0A7;
+  --card:#F0F5EF;
+  --ink:#262429;
+  --txt:#EAF2EC;
+  --dim:#93A197;
+  --pill:100px;
+  --ease:cubic-bezier(.2,0,0,1);
+}
+html,body{height:100%}
+html{overflow:hidden}
+body.dlg{
+  font-family:'Inter',-apple-system,sans-serif;background:var(--bgchat);color:var(--txt);
+  font-size:16.5px;line-height:1.5;-webkit-font-smoothing:antialiased;
+}
+.dlg img{display:block;max-width:100%}
+
+/* ---------- рамка чата ---------- */
+#chat-app{height:100svh;display:flex;flex-direction:column;max-width:680px;margin:0 auto;position:relative}
+/* фон-паттерн как в мессенджерах */
+#chat-app::before{content:"";position:absolute;inset:0;opacity:.05;pointer-events:none;
+  background-image:radial-gradient(circle at 20% 30%, #00C147 1.2px, transparent 1.6px),radial-gradient(circle at 70% 60%, #7FE0A7 1px, transparent 1.4px);
+  background-size:90px 90px,130px 130px;animation:bgdrift 80s linear infinite}
+@keyframes bgdrift{from{background-position:0 0,0 0}to{background-position:90px 180px,-130px 260px}}
+
+/* шапка */
+.chead{display:flex;align-items:center;gap:12px;padding:12px 16px;background:rgba(15,18,16,.92);
+  border-bottom:1px solid rgba(255,255,255,.07);position:relative;z-index:5;backdrop-filter:blur(10px)}
+.chead .ava{width:44px;height:44px;border-radius:50%;background:var(--card);overflow:hidden;flex:none;position:relative}
+.chead .ava img{width:150%;max-width:150%;margin:2px 0 0 -8px}
+.chead .ava video{width:100%;height:100%;object-fit:cover}
+.chead .ava::after{content:"";position:absolute;right:1px;bottom:1px;width:11px;height:11px;border-radius:50%;background:var(--me);border:2px solid var(--bgchat)}
+.chead b{font-size:1.02rem;font-weight:800;letter-spacing:-.01em}
+.chead small{display:block;font-size:.78rem;color:var(--mint);font-weight:600}
+.chead .brand{margin-left:auto;font-weight:900;letter-spacing:-.03em;color:var(--dim);font-size:.95rem}
+
+/* лента */
+#feed{flex:1;overflow-y:auto;padding:22px 16px 10px;display:flex;flex-direction:column;gap:10px;scroll-behavior:smooth;position:relative;z-index:2}
+#feed::-webkit-scrollbar{width:0}
+.day{align-self:center;font-size:.72rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--dim);
+  background:rgba(255,255,255,.05);padding:5px 14px;border-radius:var(--pill);margin:6px 0}
+
+/* пузыри */
+.msg{max-width:78%;padding:11px 15px;border-radius:18px;position:relative;
+  animation:pop .32s var(--ease) both;word-wrap:break-word}
+@keyframes pop{from{opacity:0;transform:translateY(10px) scale(.96)}to{opacity:1;transform:none}}
+.msg.otter{align-self:flex-start;background:var(--bubble);border-bottom-left-radius:6px}
+.msg.otter.chain{border-top-left-radius:10px}
+.msg.me{align-self:flex-end;background:var(--me);color:var(--ink);font-weight:600;border-bottom-right-radius:6px}
+.msg .t{font-size:.66rem;color:var(--dim);margin-left:9px;display:inline-block;transform:translateY(1px);font-variant-numeric:tabular-nums}
+.msg.me .t{color:rgba(38,36,41,.55)}
+.msg em{font-style:normal;color:var(--mint);font-weight:700}
+.msg.me em{color:var(--ink)}
+.msg b{font-weight:800}
+
+/* typing */
+.typing{align-self:flex-start;background:var(--bubble);border-radius:18px;border-bottom-left-radius:6px;
+  padding:14px 18px;display:flex;gap:5px;animation:pop .25s var(--ease) both}
+.typing i{width:7px;height:7px;border-radius:50%;background:var(--dim);animation:tpg 1.2s ease-in-out infinite}
+.typing i:nth-child(2){animation-delay:.15s}.typing i:nth-child(3){animation-delay:.3s}
+@keyframes tpg{0%,60%,100%{transform:translateY(0);opacity:.5}30%{transform:translateY(-5px);opacity:1}}
+
+/* вложения-карточки */
+.attach{align-self:flex-start;max-width:86%;background:var(--card);color:var(--ink);border-radius:18px;border-bottom-left-radius:6px;
+  padding:16px;animation:pop .4s var(--ease) both}
+.don{display:flex;align-items:center;gap:12px}
+.don .dico{width:46px;height:46px;border-radius:50%;background:#E6F9EE;display:flex;align-items:center;justify-content:center;flex:none;font-size:1.3rem}
+.don b{font-size:1.25rem;font-variant-numeric:tabular-nums}
+.don .dc{font-size:.9rem;color:#5F6B62}
+.don .dnote{font-size:.92rem;margin-top:2px;font-weight:600}
+/* карточка страницы */
+.pagecard{width:300px;max-width:100%}
+.pagecard .ph{display:flex;align-items:center;gap:11px;margin-bottom:10px}
+.pagecard .pa{width:44px;height:44px;border-radius:50%;background:#E6F9EE;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:1.15rem;color:#00752B;flex:none}
+.pagecard .pn{font-weight:800}
+.pagecard .pd{font-size:.85rem;color:#5F6B62}
+.pagecard .chips{display:flex;gap:7px;flex-wrap:wrap;margin:10px 0}
+.pagecard .chip{font-size:.85rem;font-weight:700;padding:6px 13px;border-radius:var(--pill);background:#fff;border:1.5px solid #DDDFE1;font-variant-numeric:tabular-nums}
+.pagecard .pbtn{background:var(--me);color:var(--ink);font-weight:800;text-align:center;border-radius:var(--pill);padding:12px;margin-top:4px}
+.pagecard .plabel{font-size:.72rem;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:#00752B;margin-bottom:10px;display:flex;align-items:center;gap:7px}
+.pagecard .plabel::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--me);animation:pl 2s infinite}
+@keyframes pl{50%{opacity:.4}}
+.pagecard .pgoal{font-size:.82rem;color:#5F6B62;display:flex;justify-content:space-between;margin:8px 0 5px}
+.pagecard .pgoal b{color:var(--ink);font-size:.85rem}
+.pagecard .pbar{height:8px;border-radius:8px;background:#E6F9EE;overflow:hidden}
+.pagecard .pbar i{display:block;height:100%;width:5%;background:var(--me);transition:width .9s var(--ease)}
+
+/* зона ввода */
+#dock{padding:12px 16px calc(14px + env(safe-area-inset-bottom));position:relative;z-index:5;
+  background:linear-gradient(transparent,rgba(15,18,16,.9) 30%)}
+.opts{display:flex;flex-wrap:wrap;gap:9px;justify-content:flex-end}
+.opt{
+  font-family:inherit;font-size:.95rem;font-weight:700;color:var(--mint);background:transparent;
+  border:1.5px solid rgba(127,224,167,.5);border-radius:var(--pill);padding:11px 19px;cursor:pointer;
+  transition:all .15s var(--ease);animation:pop .3s var(--ease) both}
+.opt:hover{background:rgba(0,193,71,.14);border-color:var(--me);transform:translateY(-1px)}
+.opt:active{transform:scale(.96)}
+.opt.primary{background:var(--me);color:var(--ink);border-color:var(--me)}
+.inrow{display:flex;gap:10px;animation:pop .3s var(--ease) both}
+.inrow input{
+  flex:1;font-family:inherit;font-size:1rem;color:var(--txt);background:var(--bubble);
+  border:1.5px solid rgba(255,255,255,.12);border-radius:var(--pill);padding:13px 20px;outline:none;transition:border-color .15s}
+.inrow input:focus{border-color:var(--me)}
+.inrow input::placeholder{color:var(--dim)}
+.send{
+  width:50px;height:50px;border-radius:50%;background:var(--me);border:none;cursor:pointer;flex:none;
+  display:flex;align-items:center;justify-content:center;transition:transform .15s var(--ease)}
+.send:hover{transform:scale(1.06)}
+.send:active{transform:scale(.94)}
+.send svg{color:var(--ink)}
+.hint-under{font-size:.74rem;color:var(--dim);text-align:right;margin-top:7px}
+
+/* реакции-сердца по тапу на пузырь Уппи */
+.heartfly{position:fixed;z-index:300;pointer-events:none;font-size:1.1rem;animation:hf 1s var(--ease) both}
+@keyframes hf{0%{opacity:0;transform:translateY(4px) scale(.6)}20%{opacity:1}100%{opacity:0;transform:translateY(-56px) scale(1.2)}}
+
+#confetti{position:fixed;inset:0;pointer-events:none;z-index:400}
+
+@media (prefers-reduced-motion: reduce){
+  .dlg *{animation:none !important;transition-duration:1ms !important}
+}
+@media(min-width:720px){
+  #chat-app{border-left:1px solid rgba(255,255,255,.07);border-right:1px solid rgba(255,255,255,.07)}
+}
+
+
+/* ---------- v2: стикеры Уппи ---------- */
+.sticker{align-self:flex-start;width:154px;padding:4px;animation:stickIn .55s cubic-bezier(.34,1.56,.64,1) both}
+.sticker img{width:100%;filter:drop-shadow(0 6px 18px rgba(0,0,0,.45))}
+@keyframes stickIn{0%{opacity:0;transform:scale(.4) rotate(-8deg)}70%{transform:scale(1.06) rotate(2deg)}100%{opacity:1;transform:scale(1) rotate(0)}}
+
+/* typing с мини-аватаркой */
+.typing .tava{width:22px;height:22px;border-radius:50%;background:var(--card);overflow:hidden;margin-right:4px;flex:none}
+.typing .tava img{width:160%;max-width:160%;margin:1px 0 0 -4px}
+
+/* донат: глоу-пульс + count-up */
+.attach.glow{animation:pop .4s var(--ease) both,donglow 2.2s ease-in-out .4s 2}
+@keyframes donglow{0%,100%{box-shadow:0 0 0 rgba(0,193,71,0)}50%{box-shadow:0 0 44px rgba(0,193,71,.45)}}
+.don b{display:inline-block;min-width:86px}
+
+/* сердечки от карточки */
+.heartburst{position:fixed;z-index:310;pointer-events:none;font-size:1rem;animation:hb 1.4s var(--ease) both}
+@keyframes hb{0%{opacity:0;transform:translateY(0) scale(.5)}18%{opacity:1}100%{opacity:0;transform:translateY(-90px) translateX(var(--dx,0)) scale(1.25)}}
